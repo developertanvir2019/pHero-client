@@ -7,7 +7,7 @@ const Home = () => {
     const [allUser, setAllUser] = useState([])
     const { user } = useContext(AuthContext);
     useEffect(() => {
-        fetch('http://localhost:5000/allUsers')
+        fetch('https://p-hero-task-server.vercel.app/allUsers')
             .then(res => res.json())
             .then(data => setAllUser(data))
     }, [])

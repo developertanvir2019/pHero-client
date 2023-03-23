@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Premiumlesson = () => {
     const [courses, setCourses] = useState([])
     useEffect(() => {
-        fetch('http://localhost:5000/premium')
+        fetch('https://p-hero-task-server.vercel.app/premium')
             .then(res => res.json())
             .then(data => setCourses(data))
     }, [])

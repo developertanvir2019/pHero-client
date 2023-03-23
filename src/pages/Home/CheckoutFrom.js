@@ -1,11 +1,26 @@
 import { async } from '@firebase/util';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const CheckoutFrom = () => {
+const CheckoutFrom = ({ data }) => {
+    const { price } = data;
     const [cardError, setError] = useState('');
+    const [transition, settransition] = useState('');
+    const [clientSecret, setClientSecret] = useState("");
     const stripe = useStripe();
     const elements = useElements();
+    useEffect(() => {
+        // Create PaymentIntent as soon as the page loads
+        fetch("https://p-hero-task-server.vercel.app/create-payment-intent", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ price: price }),
+        })
+            .then((res) => res.json())
+            .then((data) => setClientSecret(data?.clientSecret));
+    }, [price]);
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!stripe || !elements) {
@@ -26,9 +41,28 @@ const CheckoutFrom = () => {
         else {
             setError('')
         }
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: '',
+                    },
+                },
+            },
+        );
+        if (confirmError) {
+            setError(confirmError.message)
+            return;
+        }
+        if (paymentIntent.status) {
+            settransition(paymentIntent.id)
+        }
     }
     return (
-        <>
+        <div className='py-4'>
             <form onSubmit={handleSubmit}>
                 <CardElement
                     options={{
@@ -46,12 +80,19 @@ const CheckoutFrom = () => {
                         },
                     }}
                 />
-                <button className='btn btn-sm mt-4 btn-secondary' type="submit" disabled={!stripe}>
+                <button className='btn btn-sm mt-4 btn-secondary' type="submit" disabled={!stripe || !clientSecret}>
                     Pay
                 </button>
             </form>
             <p className='text-red-500'>{cardError}</p>
-        </>
+
+            {
+                transition && <div>
+                    <h2 className='text-green-500'> Congratulations your Payment is successfully completed!!</h2>
+                    <h2>Transition Id: <span className='text-secondary font-semibold'>{transition}</span></h2>
+                </div>
+            }
+        </div>
     );
 };
 

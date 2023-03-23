@@ -10,7 +10,7 @@ const AllUser = () => {
     const totalPage = parseInt(Math.ceil(count / size));
     const [refresh, setRefresh] = useState(true)
     useEffect(() => {
-        fetch(`http://localhost:5000/allUsers?page=${page}&size=${size}&search=${search}`)
+        fetch(`https://p-hero-task-server.vercel.app/allUsers?page=${page}&size=${size}&search=${search}`)
             .then(res => res.json())
             .then(data => {
                 setCount(data?.count);
@@ -22,7 +22,7 @@ const AllUser = () => {
         setSearch(searchRef.current.value);
     }
     const handleBlock = (id) => {
-        const apiUrl = `http://localhost:5000/users/${id}`;
+        const apiUrl = `https://p-hero-task-server.vercel.app/users/${id}`;
 
         fetch(apiUrl, {
             method: 'PUT',

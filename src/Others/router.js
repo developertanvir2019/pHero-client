@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
             {
                 path: '/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`http://localhost:5000/premium/${params?.id}`)
+                loader: ({ params }) => fetch(`https://p-hero-task-server.vercel.app/premium/${params?.id}`)
             },
         ]
     }
