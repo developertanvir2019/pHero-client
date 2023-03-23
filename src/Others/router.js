@@ -3,10 +3,12 @@ import AllUser from "../pages/AllUser/AllUser";
 import Error from "../pages/Error/Error";
 import Home from "../pages/Home/Home";
 import Payment from "../pages/Home/Payment";
+import Premiumlesson from "../pages/Home/Premiumlesson";
 import Login from "../pages/Login/Login";
 import Profile from "../pages/Profile/Profile";
 import SignUp from "../pages/signUp/SignUp";
 import AdminRoute from "./Hooks/AdminRoute";
+import LearnerRoute from "./Hooks/LearnerRoute";
 import Main from "./layout/Main";
 import PrivateRouter from "./PrivateRoute";
 
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
                 path: '/allUser',
                 element: <AdminRoute><AllUser></AllUser></AdminRoute>
 
+            },
+            {
+                path: '/premium',
+                element: <LearnerRoute><Premiumlesson></Premiumlesson></LearnerRoute>
             },
             {
                 path: '/payment/:id',

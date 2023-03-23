@@ -11,7 +11,7 @@ const Payment = () => {
 
             <div className="max-w-md mx-auto my-8">
                 <p className="text-2xl text-secondary py-2">Complete your Payment for <br />{data?.course}!!!</p>
-                <p className='text-xl font-semibold'>Payable amount- {data?.price}</p>
+                <p className='text-xl font-semibold'>Payable amount- ${data?.price}</p>
             </div>
             <div className='w-96 mx-auto bg-base-200 py-16 px-4'>
                 <Elements stripe={stripePromise}>

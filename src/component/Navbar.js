@@ -2,11 +2,13 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Others/AuthProvider';
 import useAdmin from '../Others/Hooks/useAdmin';
+import useLearner from '../Others/Hooks/useLearner';
 
 const Navbar = () => {
     const { logout, user } = useContext(AuthContext)
     const [hidden, setHidden] = useState(false)
     const [isAdmin] = useAdmin(user?.email);
+    const [isLearner] = useLearner(user?.email);
     return (
         <nav className="bg-blue-500">
             <div className="mx-auto px-4 py-2 max-w-7xl sm:px-6 lg:px-8">
@@ -18,6 +20,7 @@ const Navbar = () => {
                         </Link>
                         <div className="hidden lg:flex lg:ml-4">
                             <Link to='/' className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Home</Link>
+                            <Link to='/premium' className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Premium Courses</Link>
                             {
                                 isAdmin && <Link to='/allUser' className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Registered User</Link>
                             }
@@ -41,13 +44,14 @@ const Navbar = () => {
                 <div className='lg:hidden' id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <Link to='/' className="text-white hover:bg-blue-700 hover:text-gray-100 block rounded-md py-2 px-3">Home</Link>
+                        <Link to='/premium' className="text-white hover:bg-blue-700 hover:text-gray-100 block rounded-md py-2 px-3">Premium Courses</Link>
                         {
-                            isAdmin && <Link to='/allUser' className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Registered User</Link>
+                            isAdmin && <Link to='/allUser' className="text-white hover:bg-blue-700 block hover:text-gray-100 rounded-md py-2 px-3">Registered User</Link>
                         }
-                        <Link to='/profile' className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Profile</Link>
+                        <Link to='/profile' className="text-white hover:bg-blue-700 block hover:text-gray-100 rounded-md py-2 px-3">Profile</Link>
                         {!user ?
-                            <Link to='/login' className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Login</Link> :
-                            <Link onClick={() => logout()} className="text-white hover:bg-blue-700 hover:text-gray-100 rounded-md py-2 px-3">Logout</Link>
+                            <Link to='/login' className="text-white hover:bg-blue-700 block hover:text-gray-100 rounded-md py-2 px-3">Login</Link> :
+                            <Link onClick={() => logout()} className="text-white hover:bg-blue-700 block hover:text-gray-100 rounded-md py-2 px-3">Logout</Link>
                         }
                     </div>
                 </div>

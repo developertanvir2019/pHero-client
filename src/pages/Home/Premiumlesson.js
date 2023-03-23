@@ -34,7 +34,7 @@ const Premiumlesson = () => {
                                     </h3>
                                     <p className='text-gray-700'>{course?.description}</p>
                                     <div className="flex items-center justify-between pt-8">
-                                        <h3 className="text-lg font-bold">{course?.price}</h3>
+                                        <h3 className="text-lg font-bold">${course?.price}</h3>
                                         <Link to={`/payment/${course?._id}`} className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2 px-4">Enroll Now</Link>
                                     </div>
                                 </div>

@@ -7,7 +7,7 @@ const Profile = () => {
         fetch('https://p-hero-task-server.vercel.app/allUsers')
             .then(res => res.json())
             .then(data => setAllUser(data))
-    }, [])
+    }, [user])
     const currentUser = allUser?.users?.find(us => us?.email === user?.email);
     return (
         <div className="flex flex-col items-center justify-center pt-8 mb-32">
@@ -24,7 +24,7 @@ const Profile = () => {
                 </div>
                 <div>
                     <h3 className="text-lg font-bold mb-2">Driving Licence</h3>
-                    <img src={currentUser?.images[2]} alt="Driving Licence" className="w-48 h-auto" />
+                    <img src={currentUser?.images[2] ? currentUser?.images[2] : 'https://hbr.org/resources/images/article_assets/2018/01/jan18_11_Hayon-Thapaliya.jpg'} alt="Driving Licence" className="w-48 h-auto" />
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-8 mt-8">

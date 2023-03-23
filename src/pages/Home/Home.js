@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../../Others/AuthProvider';
 import Feature from './Feature';
 import Premiumlesson from './Premiumlesson';
@@ -6,12 +7,12 @@ import Premiumlesson from './Premiumlesson';
 const Home = () => {
     const [allUser, setAllUser] = useState([])
     const { user } = useContext(AuthContext);
+    const currentUser = allUser?.users?.find(us => us?.email === user?.email);
     useEffect(() => {
         fetch('https://p-hero-task-server.vercel.app/allUsers')
             .then(res => res.json())
             .then(data => setAllUser(data))
-    }, [])
-    const currentUser = allUser?.users?.find(us => us?.email === user?.email);
+    }, [currentUser])
     return (
         <div>
             <div className="bg-gray-100">
@@ -29,11 +30,7 @@ const Home = () => {
                         </button>
                     </div>
                 </section>
-                {
-                    currentUser?.role === 'learner' ? <Premiumlesson></Premiumlesson> : <Feature></Feature>
-                }
-
-
+                <Feature></Feature>
             </div>
         </div>
     );
